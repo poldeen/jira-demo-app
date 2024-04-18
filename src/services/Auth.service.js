@@ -12,6 +12,8 @@ const login = async () => {
       'read:jira-work ' +
         'write:jira-work ' +
         'read:jira-user ' +
+        'manage:jira-project ' +
+        'manage:jira-configuration ' +
         'offline_access'
     );
     params.append('state', 'dkdsifalfkja;ojavafiah;ifewfhfoewhfweioflguifhew');

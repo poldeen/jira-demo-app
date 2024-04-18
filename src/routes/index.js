@@ -3,6 +3,7 @@ import Landing from 'components/Landing';
 import Error404 from 'components/errors/Error404';
 import Error500 from 'components/errors/Error500';
 import Jira from 'components/jira/Jira';
+import JiraIssues from 'components/jira/JiraIssues';
 import MainLayout from 'layouts/MainLayout';
 import React from 'react';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
@@ -38,6 +39,10 @@ const routes = [
           {
             path: paths.jira,
             element: <Jira />
+          },
+          {
+            path: paths.jiraIssues,
+            element: <JiraIssues />
           }
         ]
       },

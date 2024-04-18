@@ -1,29 +1,51 @@
-import React from 'react';
-import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { useAuth } from 'providers/AuthProvider';
+import React, { useEffect } from 'react';
+import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const NavbarTop = () => {
+  const { auth, setAuth } = useAuth();
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setAuth({ ...auth, loggedIn: true });
+    }
+  }, []);
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('resources');
+    setAuth({ ...auth, loggedIn: false });
+  };
   return (
     <Navbar expand="lg">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          Demo Site
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="/spotify">Spotify</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+            {auth.loggedIn ? (
+              <>
+                <Nav.Link as={Link} to="/">
+                  Documentation
+                </Nav.Link>
+
+                <Nav.Link as={Link} to="jira">
+                  Jira Demo
+                </Nav.Link>
+              </>
+            ) : null}
           </Nav>
         </Navbar.Collapse>
+      </Container>
+      <Container className="d-flex justify-content-end">
+        {auth.loggedIn ? (
+          <Button as={Link} to="/" onClick={logout}>
+            Logout
+          </Button>
+        ) : null}
       </Container>
     </Navbar>
   );
